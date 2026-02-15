@@ -6,7 +6,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 type Theme = "light" | "dark";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useLocalStorage<Theme>("pomodisc:theme", "dark");
+  const [theme, setTheme] = useLocalStorage<Theme>("pomotimerx:theme", "dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

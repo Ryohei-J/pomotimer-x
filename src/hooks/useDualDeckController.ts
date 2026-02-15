@@ -49,8 +49,8 @@ export function useDualDeckController(
   ytApiReady: boolean,
 ): DualDeckState {
   // URL state (persisted)
-  const [workUrl, setWorkUrlState] = useLocalStorage("pomodisc:workUrl", "");
-  const [breakUrl, setBreakUrlState] = useLocalStorage("pomodisc:breakUrl", "");
+  const [workUrl, setWorkUrlState] = useLocalStorage("pomotimerx:workUrl", "");
+  const [breakUrl, setBreakUrlState] = useLocalStorage("pomotimerx:breakUrl", "");
   const [workVideoId, setWorkVideoId] = useState<string | null>(() => extractVideoId(workUrl));
   const [breakVideoId, setBreakVideoId] = useState<string | null>(() => extractVideoId(breakUrl));
   const [workUrlError, setWorkUrlError] = useState<string | null>(null);

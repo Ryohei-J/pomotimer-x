@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-surface text-text-primary p-4 md:p-8 font-sans">
       <div className="flex items-center justify-center mb-8 md:mb-12 relative">
-        <h1 className="text-2xl md:text-3xl font-bold text-center">PomoDisc</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-center">PomotimerX</h1>
         <div className="absolute right-0">
           <ThemeToggle />
         </div>

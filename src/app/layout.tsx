@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PomoDisc",
+  title: "PomotimerX",
   description: "Pomodoro timer with DJ turntable UI",
 };
 

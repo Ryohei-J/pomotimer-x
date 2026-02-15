@@ -2,7 +2,7 @@ export function ThemeScript() {
   const script = `
     (function() {
       try {
-        var theme = JSON.parse(localStorage.getItem('pomodisc:theme'));
+        var theme = JSON.parse(localStorage.getItem('pomotimerx:theme'));
         if (theme === 'dark' || theme === null) {
           document.documentElement.classList.add('dark');
         }

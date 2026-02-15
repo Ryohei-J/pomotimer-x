@@ -29,9 +29,9 @@ const DEFAULT_CYCLES = 4;
 const TICK_INTERVAL_MS = 250;
 
 export function useTimer(): UseTimerReturn {
-  const [workDurationMinutes, setWorkDurationMinutes] = useLocalStorage("pomodisc:workMinutes", DEFAULT_WORK_MINUTES);
-  const [breakDurationMinutes, setBreakDurationMinutes] = useLocalStorage("pomodisc:breakMinutes", DEFAULT_BREAK_MINUTES);
-  const [totalCycles, setTotalCyclesState] = useLocalStorage("pomodisc:totalCycles", DEFAULT_CYCLES);
+  const [workDurationMinutes, setWorkDurationMinutes] = useLocalStorage("pomotimerx:workMinutes", DEFAULT_WORK_MINUTES);
+  const [breakDurationMinutes, setBreakDurationMinutes] = useLocalStorage("pomotimerx:breakMinutes", DEFAULT_BREAK_MINUTES);
+  const [totalCycles, setTotalCyclesState] = useLocalStorage("pomotimerx:totalCycles", DEFAULT_CYCLES);
 
   const [remainingSeconds, setRemainingSeconds] = useState(DEFAULT_WORK_MINUTES * 60);
   const [sessionType, setSessionType] = useState<SessionType>("work");
