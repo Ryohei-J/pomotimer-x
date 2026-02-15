@@ -237,20 +237,32 @@ export function useDualDeckController(
     setPlayersInitialized(true);
   }, [ytApiReady, workVideoId, shortBreakVideoId, longBreakVideoId, workPlayer, shortBreakPlayer, longBreakPlayer]);
 
-  // Update video when URL changes while player exists
+  // Update or remove video when URL changes while player exists
   useEffect(() => {
-    if (!workPlayer.isReady || !workVideoId) return;
-    workPlayer.loadVideo(workVideoId);
+    if (!workPlayer.isReady) return;
+    if (workVideoId) {
+      workPlayer.loadVideo(workVideoId);
+    } else {
+      workPlayer.destroy();
+    }
   }, [workVideoId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (!shortBreakPlayer.isReady || !shortBreakVideoId) return;
-    shortBreakPlayer.loadVideo(shortBreakVideoId);
+    if (!shortBreakPlayer.isReady) return;
+    if (shortBreakVideoId) {
+      shortBreakPlayer.loadVideo(shortBreakVideoId);
+    } else {
+      shortBreakPlayer.destroy();
+    }
   }, [shortBreakVideoId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (!longBreakPlayer.isReady || !longBreakVideoId) return;
-    longBreakPlayer.loadVideo(longBreakVideoId);
+    if (!longBreakPlayer.isReady) return;
+    if (longBreakVideoId) {
+      longBreakPlayer.loadVideo(longBreakVideoId);
+    } else {
+      longBreakPlayer.destroy();
+    }
   }, [longBreakVideoId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Fade-out: last 5 seconds of session
@@ -310,16 +322,22 @@ export function useDualDeckController(
     }
   }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Reset / Complete: stop all and reset position to start
+  // Reset / Complete: pause all and reset position to start
   useEffect(() => {
     if (status === "idle") {
       clearFadeIn();
-      workPlayer.stop();
-      shortBreakPlayer.stop();
-      longBreakPlayer.stop();
+      workPlayer.pause();
+      shortBreakPlayer.pause();
+      longBreakPlayer.pause();
       workPlayer.seekToStart();
       shortBreakPlayer.seekToStart();
       longBreakPlayer.seekToStart();
+      // seekTo can trigger playback, so pause again after a short delay
+      setTimeout(() => {
+        workPlayer.pause();
+        shortBreakPlayer.pause();
+        longBreakPlayer.pause();
+      }, 100);
       if (isComplete) {
         setPlayersInitialized(false);
       }

@@ -3,8 +3,7 @@
 ## 概要
 
 このドキュメントはPomotimerXのビジュアルアイデンティティとUIデザインに関する基本ルールを定義します。
-
-> TBDの値にはtailwind.config.tsの既存テーマと一貫性のある妥当なデフォルト値を使用してください。
+スタイリングはTailwind CSS v4を使用し、CSS変数ベースのテーマシステムで管理しています。
 
 ---
 
@@ -12,65 +11,66 @@
 
 ### トーンの原則
 
-1. **敬語は「です・ます」調** - 丁寧だが堅すぎない
-2. **簡潔に** - 長い説明より短いメッセージ
-3. **ポジティブに** - できないことより、できることを伝える
+1. **簡潔に** - 短くわかりやすいラベルとメッセージ
+2. **ポジティブに** - できないことより、できることを伝える
+3. **絵文字は控えめに** - テキスト内での絵文字は使わない
 
-### 表現の例
+### UIテキストの言語
 
-| シーン | Good | Bad |
-|--------|------|-----|
-| 成功時 | 「スキャン完了！」「見つかりました」 | 「スキャン処理が正常に完了しました」 |
-| エラー時 | 「読み取れませんでした。もう一度試してみてください」 | 「エラーが発生しました（エラーコード: 500）」 |
-| 空の状態 | 「まだスキャン履歴がありません」 | 「データが存在しません」 |
-| ローディング | 「探しています...」 | 「データを取得中です。しばらくお待ちください」 |
+- アプリのUIは **英語** で統一する
+- ラベルは短い単語・フレーズを使う（例: "Work", "Short Break", "Start", "Reset"）
 
-### 避けるべき表現
+---
 
-- **過度な敬語**: 「〜させていただきます」「〜でございます」
-- **システム用語**: 「エラー」「無効」「失敗」をそのまま使う
-- **否定的な表現**: 「できません」→「〜してみてください」に言い換え
-- **曖昧な表現**: 「しばらくお待ちください」→ 具体的に何が起きているか伝える
-- **絵文字の多用**: テキスト内での絵文字は控えめに
+## テーマシステム
+
+ダーク/ライトの2テーマをサポート。デフォルトはダークモード。
+`globals.css` の `:root`（ライト）と `.dark`（ダーク）でCSS変数を切り替え、Tailwind `@theme inline` でユーティリティクラスにマッピングしている。
 
 ---
 
 ## カラーパレット
 
-### プライマリカラー
+### アクセント / デッキカラー
 
-| 名前 | HEX | 用途 |
-|------|-----|------|
-| Primary | `#249A8D` | メインアクション、ブランドカラー |
-| Primary Dark | `#1D7A70` | ホバー状態、アクセント |
-| Primary Light | `#E6F5F3` | 背景、薄いアクセント |
+| トークン | HEX | Tailwindクラス | 用途 |
+|---------|-----|---------------|------|
+| `--c-accent` | `#F88B3A` | `text-accent`, `bg-accent` | メインアクセント、セッションラベル、フォーカスリング |
+| `--c-work` | `#F88B3A` | `text-work`, `bg-work` | 作業デッキ（= accent） |
+| `--c-short-break` | `#4ECDC4` | `text-short-break`, `bg-short-break` | 小休憩デッキ |
+| `--c-long-break` | `#7C6EE7` | `text-long-break`, `bg-long-break` | 長休憩デッキ |
 
-### セカンダリカラー
+> デッキカラーはライト/ダークモードで共通。
 
-| 名前 | HEX | 用途 |
-|------|-----|------|
-| Secondary | `#F59E0B` | サブアクション |
-| Secondary Dark | `#D97706` | ホバー状態 |
-| Secondary Light | `#FEF3C7` | 背景 |
+### サーフェスカラー
 
-### ニュートラルカラー
+| トークン | ライト | ダーク | Tailwindクラス | 用途 |
+|---------|--------|-------|---------------|------|
+| `--background` | `#e0e0e0` | `#3a3a3a` | `bg-background` | ページ背景 |
+| `--c-surface` | `#ffffff` | `#2c2c2c` | `bg-surface` | メインカード、モーダル背景 |
+| `--c-surface-alt` | `#e5e7eb` | `#3a3a3a` | `bg-surface-alt` | 入力フィールド、ボタン背景、テーマトグル |
 
-| 名前 | HEX | 用途 |
-|------|-----|------|
-| Gray 900 | `#111827` | テキスト（メイン） |
-| Gray 700 | `#374151` | テキスト（サブ） |
-| Gray 500 | `#6B7280` | ボーダー、プレースホルダー |
-| Gray 300 | `#D1D5DB` | ディバイダー |
-| Gray 100 | `#F3F4F6` | 背景 |
-| White | `#FFFFFF` | ベース背景 |
+### テキストカラー
+
+| トークン | ライト | ダーク | Tailwindクラス | 用途 |
+|---------|--------|-------|---------------|------|
+| `--foreground` | `#1a1a1a` | `#f0f0f0` | `text-foreground` | body デフォルト |
+| `--c-text-primary` | `#1a1a1a` | `#f0f0f0` | `text-text-primary` | メインテキスト |
+| `--c-text-secondary` | `#6b7280` | `#a0a0a0` | `text-text-secondary` | ラベル、ヒント、サブテキスト |
+
+### ボーダー / ディバイダー
+
+| トークン | ライト | ダーク | Tailwindクラス | 用途 |
+|---------|--------|-------|---------------|------|
+| `--c-divider` | `#d1d5db` | `#4a4a4a` | `border-divider`, `divide-divider` | ボーダー、グリッド区切り |
 
 ### セマンティックカラー
 
 | 名前 | HEX | 用途 |
 |------|-----|------|
 | Success | `#10B981` | 成功状態 |
-| Warning | `#F59E0B` | 警告状態 |
-| Error | `#EF4444` | エラー状態 |
+| Warning | `#F88B3A` | 警告状態（= accent） |
+| Error | `#EF4444` | エラー状態（`text-red-400` で使用） |
 | Info | `#3B82F6` | 情報 |
 
 ---
@@ -79,125 +79,186 @@
 
 ### フォントファミリー
 
+| 用途 | フォント | CSS変数 | Tailwindクラス |
+|------|---------|---------|---------------|
+| UI全般 | Inter + 日本語フォールバック | `--font-inter` | `font-sans` |
+| タイマー、数値入力 | Geist Mono | `--font-geist-mono` | `font-mono` |
+
 ```css
-/* Inter (Latin) + 日本語システムフォントフォールバック */
-/* next/font/google 経由で読み込み、CSS変数 --font-inter として適用 */
+/* sans: Inter + 日本語システムフォントフォールバック */
 font-family: var(--font-inter), "Hiragino Sans", "Hiragino Kaku Gothic ProN",
   "Yu Gothic", "Meiryo", sans-serif;
+
+/* mono: Geist Mono */
+font-family: var(--font-geist-mono);
 ```
 
-### フォントサイズ
+### フォントサイズ（実際の使用）
 
-| 名前 | サイズ | 行間 | 用途 |
-|------|--------|------|------|
-| Display | TBD | TBD | ヒーローセクション |
-| H1 | TBD | TBD | ページタイトル |
-| H2 | TBD | TBD | セクションタイトル |
-| H3 | TBD | TBD | サブセクション |
-| Body | TBD | TBD | 本文 |
-| Small | TBD | TBD | キャプション、注釈 |
+| 用途 | クラス | 補足 |
+|------|--------|------|
+| タイマーカウントダウン | `text-6xl md:text-8xl font-mono font-bold tabular-nums` | 最大の表示要素 |
+| ページタイトル（h1） | `text-2xl md:text-3xl font-bold` | "PomotimerX" |
+| デッキ見出し（h2） | `text-lg font-bold` | "Work", "Short Break" 等 |
+| モーダル見出し（h3） | `text-lg font-semibold` | "Playback Error" |
+| セッションラベル | `text-xs font-medium uppercase tracking-widest` | タイマー上部 |
+| ボタン | `text-base font-semibold` | — |
+| 入力ラベル | `text-sm text-text-secondary` | — |
+| 補足テキスト | `text-sm text-text-secondary font-medium` | セッションインジケーター |
+| エラーテキスト | `text-red-400 text-xs` | URL入力下 |
 
 ### フォントウェイト
 
-| 名前 | ウェイト | 用途 |
-|------|----------|------|
-| Regular | 400 | 本文 |
-| Medium | 500 | 強調 |
-| Bold | 700 | 見出し、ボタン |
+| ウェイト | クラス | 用途 |
+|----------|--------|------|
+| 400 | `font-normal`（デフォルト） | 本文、ラベル |
+| 500 | `font-medium` | セッションラベル、セッションインジケーター |
+| 600 | `font-semibold` | ボタン、モーダル見出し |
+| 700 | `font-bold` | ページタイトル、デッキ見出し、タイマー |
 
 ---
 
 ## UIコンポーネント
 
-### ボタン
+### ボタン（`Button.tsx`）
+
+Framer Motion の `motion.button` ベース。
 
 #### バリエーション
 
-- **Primary**: メインアクション
-- **Secondary**: サブアクション
-- **Outline**: 軽いアクション
-- **Ghost**: テキストリンク風
+| バリアント | スタイル | 用途 |
+|-----------|---------|------|
+| **Primary** | `bg-accent text-white hover:bg-accent/85` | メインアクション（Start, Pause, Resume, OK） |
+| **Secondary** | `bg-surface-alt text-text-primary border border-divider hover:bg-surface-alt/80` | サブアクション（Reset） |
 
-#### サイズ
+#### 共通スタイル
 
-| サイズ | 高さ | パディング | フォントサイズ |
-|--------|------|------------|----------------|
-| Large | TBD | TBD | TBD |
-| Medium | TBD | TBD | TBD |
-| Small | TBD | TBD | TBD |
+```
+py-2 px-4 rounded-lg font-semibold text-base text-center transition-colors
+disabled:opacity-40 disabled:cursor-not-allowed
+```
 
-#### 状態
+#### アニメーション
 
-- Default
-- Hover
-- Active
-- Disabled
-- Loading
+- Hover: `scale: 1.05`
+- Active（tap）: `scale: 0.95`
+- Disabled時はスケールアニメーション無効
 
-### 入力フィールド
+### テキスト入力フィールド
 
-TODO: 入力フィールドのスタイル定義
+#### URL入力（`UrlInput.tsx`）
 
-### カード
+```
+w-full rounded-lg bg-surface-alt p-3 text-sm
+border border-divider focus:outline-none focus:border-accent
+disabled:opacity-50 disabled:cursor-not-allowed
+placeholder:text-text-secondary/50
+```
 
-- **ボーダー**: `border border-gray-200`
-- **背景**: `bg-white`
-- **角丸**: `rounded-lg`
-- **シャドウ**: `shadow-card`（デフォルト）、インタラクティブなカードは `hover:shadow-card-hover transition-shadow`
-- **画像コンテナ**: `bg-gradient-to-br from-blue-50 to-purple-50`
+#### 数値入力（`CycleSettings.tsx`）
+
+```
+w-14 rounded-lg bg-surface-alt p-1.5 text-center font-mono
+border border-divider focus:outline-none focus:border-accent
+disabled:opacity-50 disabled:cursor-not-allowed text-text-primary
+```
+
+#### レンジスライダー（`globals.css`）
+
+- トラック: 高さ 2px、`var(--c-text-secondary)` 色
+- サム: 14x14px 円形、白背景、`var(--c-text-secondary)` ボーダー
+- Disabled: `opacity: 0.5; cursor: not-allowed`
+
+### メインカード
+
+- **背景**: `bg-surface`
+- **角丸**: `rounded-2xl`
+- **シャドウ**: `shadow-xl`（Tailwind デフォルト）
+- **オーバーフロー**: `overflow-hidden`
+- **最大幅**: `max-w-6xl`
+
+### モーダル（`ErrorModal.tsx`）
+
+- **バックドロップ**: `fixed inset-0 bg-black/60`
+- **カード**: `bg-surface rounded-2xl p-8 max-w-md border border-surface-alt`
+- **アニメーション**: `AnimatePresence` + `scale: 0.9 → 1`、`opacity: 0 → 1`
+
+### テーマトグル（`ThemeToggle.tsx`）
+
+- **サイズ**: `w-9 h-9 rounded-full`
+- **背景**: `bg-surface-alt hover:bg-surface-alt/80`
+- **アイコン**: インラインSVG（Sun/Moon）、18x18px、`stroke="currentColor"`
+
+### YouTube埋め込み（`YouTubeEmbed.tsx`）
+
+- **サイズ**: `w-40 h-24`
+- **スタイル**: `rounded-lg overflow-hidden bg-black/50`
 
 ---
 
 ## スペーシング
 
-| 名前 | 値 | 用途 |
-|------|-----|------|
-| xs | 4px | 最小間隔 |
-| sm | 8px | コンパクト |
-| md | 16px | 標準 |
-| lg | 24px | セクション間 |
-| xl | 32px | 大きな区切り |
-| 2xl | 48px | ページセクション |
+Tailwind デフォルトのスペーシングスケールを使用。
+
+| クラス | 値 | 主な使用箇所 |
+|--------|-----|-------------|
+| `gap-1` | 4px | タイマー内部 |
+| `gap-2` | 8px | ヘッダー内要素、デッキ見出し |
+| `gap-3` | 12px | 設定エリア、スライダー内 |
+| `gap-4` | 16px | ボタン間、デッキパネル内 |
+| `p-4 md:p-8` | 16px / 32px | ページパディング |
+| `p-5` | 20px | デッキパネル内 |
+| `p-6 pb-4` | 24px / 16px | ヘッダー |
+| `p-8` | 32px | モーダル |
 
 ---
 
 ## 角丸（Border Radius）
 
-| 名前 | 値 | 用途 |
-|------|-----|------|
-| none | 0px | 角丸なし |
-| sm | TBD | ボタン、入力 |
-| md | TBD | カード |
-| lg | TBD | モーダル |
-| full | 9999px | アバター、バッジ |
+| クラス | 用途 |
+|--------|------|
+| `rounded-lg` | ボタン、入力フィールド、YouTube埋め込み |
+| `rounded-2xl` | メインカード、モーダルカード |
+| `rounded-full` | テーマトグル、デッキのアクティブインジケーター（ドット） |
 
 ---
 
 ## シャドウ
 
-| 名前 | 値 | 用途 |
-|------|-----|------|
-| card | `0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06)` | カードのデフォルト |
-| card-hover | `0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06)` | カードのホバー・リフト状態 |
-| lg | Tailwind デフォルト | CTA ボタン、オーバーレイ |
+| クラス | 用途 |
+|--------|------|
+| `shadow-xl` | メインカード |
 
 ---
 
-## レスポンシブブレークポイント
+## レスポンシブ
 
-| 名前 | 幅 | 用途 |
-|------|-----|------|
-| sm | 640px | モバイル |
-| md | 768px | タブレット |
-| lg | 1024px | 小型デスクトップ |
-| xl | 1280px | デスクトップ |
-| 2xl | 1536px | 大型デスクトップ |
+Tailwind v4 デフォルトブレークポイントを使用。
+
+| ブレークポイント | 幅 |
+|----------------|-----|
+| `sm` | 640px |
+| `md` | 768px |
+| `lg` | 1024px |
+| `xl` | 1280px |
+| `2xl` | 1536px |
+
+主な切り替えポイントは `md`（768px）:
+- レイアウト: `grid-cols-1` → `grid-cols-3`
+- ページパディング: `p-4` → `p-8`
+- タイトル: `text-2xl` → `text-3xl`
+- タイマー: `text-6xl` → `text-8xl`
+- デッキ区切り: `divide-y` → `divide-x`
 
 ---
 
-## 更新履歴
+## アニメーション
 
-| 日付 | バージョン | 変更内容 |
-|------|------------|----------|
-| 2026-02-02 | 0.1.0 | 初版作成 |
-| 2026-02-10 | 0.2.0 | フォント（Inter）、シャドウ、ナビインジケーター追加 |
+Framer Motion（`motion/react`）を使用。
+
+| コンポーネント | アニメーション |
+|---------------|---------------|
+| ボタン | `whileHover: scale 1.05`、`whileTap: scale 0.95` |
+| セッションインジケーター | `AnimatePresence` + `y: 4→0`、`opacity: 0→1` のフェード |
+| エラーモーダル（背景） | `opacity: 0→1` のフェード |
+| エラーモーダル（カード） | `scale: 0.9→1`、`opacity: 0→1` |

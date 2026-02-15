@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+import { Button } from "@/components/Button";
 
 interface ErrorModalProps {
   isOpen: boolean;
@@ -28,13 +29,9 @@ export function ErrorModal({ isOpen, message, onClose }: ErrorModalProps) {
           >
             <h3 className="text-lg font-semibold mb-3">Playback Error</h3>
             <p className="text-text-secondary mb-6">{message}</p>
-            <button
-              onClick={onClose}
-              className="w-full px-4 py-2 rounded-xl bg-work text-white font-semibold
-                hover:bg-work/80 transition-colors"
-            >
+            <Button onClick={onClose} className="w-full">
               OK
-            </button>
+            </Button>
           </motion.div>
         </motion.div>
       )}

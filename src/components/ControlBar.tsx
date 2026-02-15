@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { Button } from "@/components/Button";
 import type { TimerStatus } from "@/types/timer";
 
 interface ControlBarProps {
@@ -10,36 +10,6 @@ interface ControlBarProps {
   onPause: () => void;
   onResume: () => void;
   onReset: () => void;
-}
-
-function Button({
-  children,
-  onClick,
-  variant = "primary",
-  disabled = false,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  variant?: "primary" | "secondary";
-  disabled?: boolean;
-}) {
-  return (
-    <motion.button
-      whileHover={disabled ? {} : { scale: 1.05 }}
-      whileTap={disabled ? {} : { scale: 0.95 }}
-      onClick={onClick}
-      disabled={disabled}
-      className={`w-[110px] py-2 rounded-lg font-semibold text-base text-center transition-colors
-        disabled:opacity-40 disabled:cursor-not-allowed
-        ${
-          variant === "primary"
-            ? "bg-surface-alt text-text-primary border border-divider hover:bg-surface-alt/80"
-            : "bg-surface-alt text-text-primary border border-divider hover:bg-surface-alt/80"
-        }`}
-    >
-      {children}
-    </motion.button>
-  );
 }
 
 export function ControlBar({
@@ -53,20 +23,25 @@ export function ControlBar({
   return (
     <div className="flex gap-4">
       {status === "idle" && (
-        <Button onClick={onStart}>
+        <Button onClick={onStart} className="w-[110px]">
           {isComplete ? "Restart" : "Start"}
         </Button>
       )}
       {status === "running" && (
-        <Button onClick={onPause}>Pause</Button>
+        <Button onClick={onPause} className="w-[110px]">
+          Pause
+        </Button>
       )}
       {status === "paused" && (
-        <Button onClick={onResume}>Resume</Button>
+        <Button onClick={onResume} className="w-[110px]">
+          Resume
+        </Button>
       )}
       <Button
         onClick={onReset}
         variant="secondary"
         disabled={status === "idle" && !isComplete}
+        className="w-[110px]"
       >
         Reset
       </Button>

@@ -3,34 +3,28 @@
 :root {
   --background: #e0e0e0;
   --foreground: #1a1a1a;
-  --c-accent: #f97316;
-  --c-work: #f97316;
-  --c-short-break: #f97316;
-  --c-long-break: #f97316;
+  --c-accent: #F88B3A;
+  --c-work: #F88B3A;
+  --c-short-break: #4ECDC4;
+  --c-long-break: #7C6EE7;
   --c-surface: #ffffff;
   --c-surface-alt: #e5e7eb;
-  --c-surface-deck: #f3f4f6;
   --c-text-primary: #1a1a1a;
   --c-text-secondary: #6b7280;
-  --c-vinyl-groove: #2a2a2a;
-  --c-vinyl-groove-alt: #1a1a1a;
   --c-divider: #d1d5db;
 }
 
 .dark {
   --background: #3a3a3a;
   --foreground: #f0f0f0;
-  --c-accent: #f97316;
-  --c-work: #f97316;
-  --c-short-break: #f97316;
-  --c-long-break: #f97316;
+  --c-accent: #F88B3A;
+  --c-work: #F88B3A;
+  --c-short-break: #4ECDC4;
+  --c-long-break: #7C6EE7;
   --c-surface: #2c2c2c;
   --c-surface-alt: #3a3a3a;
-  --c-surface-deck: #2c2c2c;
   --c-text-primary: #f0f0f0;
   --c-text-secondary: #a0a0a0;
-  --c-vinyl-groove: #111111;
-  --c-vinyl-groove-alt: #080808;
   --c-divider: #4a4a4a;
 }
 
@@ -43,11 +37,11 @@
   --color-long-break: var(--c-long-break);
   --color-surface: var(--c-surface);
   --color-surface-alt: var(--c-surface-alt);
-  --color-surface-deck: var(--c-surface-deck);
   --color-text-primary: var(--c-text-primary);
   --color-text-secondary: var(--c-text-secondary);
   --color-divider: var(--c-divider);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter), "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Meiryo", sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
