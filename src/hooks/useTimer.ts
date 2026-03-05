@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import type { SessionType, TimerStatus } from "@/types/timer";
 import { useLocalStorage } from "./useLocalStorage";
 
+export type OnWorkSessionComplete = (durationMinutes: number) => void;
+
 export interface UseTimerReturn {
   remainingSeconds: number;
   sessionType: SessionType;
@@ -33,7 +35,7 @@ const DEFAULT_LONG_BREAK_MINUTES = 15;
 const DEFAULT_CYCLES = 4;
 const TICK_INTERVAL_MS = 250;
 
-export function useTimer(): UseTimerReturn {
+export function useTimer(onWorkSessionComplete?: OnWorkSessionComplete): UseTimerReturn {
   const [workDurationMinutes, setWorkDurationMinutes] = useLocalStorage("pomotimerx:workMinutes", DEFAULT_WORK_MINUTES);
   const [shortBreakDurationMinutes, setShortBreakDurationMinutes] = useLocalStorage("pomotimerx:shortBreakMinutes", DEFAULT_SHORT_BREAK_MINUTES);
   const [longBreakDurationMinutes, setLongBreakDurationMinutes] = useLocalStorage("pomotimerx:longBreakMinutes", DEFAULT_LONG_BREAK_MINUTES);
@@ -49,6 +51,8 @@ export function useTimer(): UseTimerReturn {
   const anchorTimestampRef = useRef<number | null>(null);
   const anchorRemainingRef = useRef<number>(DEFAULT_WORK_MINUTES * 60);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const onWorkSessionCompleteRef = useRef(onWorkSessionComplete);
+  onWorkSessionCompleteRef.current = onWorkSessionComplete;
 
   // Refs to access latest state in tick without re-creating the interval
   const sessionTypeRef = useRef<SessionType>("work");
@@ -82,6 +86,7 @@ export function useTimer(): UseTimerReturn {
     const lbEnabled = longBreakEnabledRef.current;
 
     if (curSession === "work") {
+      onWorkSessionCompleteRef.current?.(workMinutesRef.current);
       if (curCycle >= maxCycles) {
         // Last work session ended
         if (lbEnabled) {

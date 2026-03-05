@@ -1,11 +1,14 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import Image from "next/image";
 import { useTimer } from "@/hooks/useTimer";
 import { useYouTubeApi } from "@/hooks/useYouTubeApi";
 import { useDualDeckController } from "@/hooks/useDualDeckController";
 import { useAlarm } from "@/hooks/useAlarm";
+import { useStats } from "@/hooks/useStats";
+import { usePresets } from "@/hooks/usePresets";
+import { useTodos } from "@/hooks/useTodos";
 import { DeckPanel } from "@/components/DeckPanel";
 import { TimerDisplay } from "@/components/TimerDisplay";
 import { ControlBar } from "@/components/ControlBar";
@@ -15,9 +18,19 @@ import { ErrorModal } from "@/components/ErrorModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AlarmToggle } from "@/components/AlarmToggle";
 import { Footer } from "@/components/Footer";
+import { StatsPanel } from "@/components/StatsPanel";
+import { StatsSummary } from "@/components/StatsSummary";
+import { PresetsPanel } from "@/components/PresetsPanel";
+import { TodoList } from "@/components/TodoList";
 
 export default function Home() {
-  const timer = useTimer();
+  const [isStatsOpen, setIsStatsOpen] = useState(false);
+  const [isDetailedStats, setIsDetailedStats] = useState(false);
+  const [isPresetsOpen, setIsPresetsOpen] = useState(false);
+  const { stats, recordSession } = useStats();
+  const { presets, savePreset, deletePreset } = usePresets();
+  const { todos, addTodo, toggleTodo, deleteTodo } = useTodos();
+  const timer = useTimer(recordSession);
   const ytApiReady = useYouTubeApi();
   const deck = useDualDeckController(
     timer.sessionType,
@@ -73,7 +86,30 @@ export default function Home() {
 
           {/* Right: Settings + Theme */}
           <div className="flex flex-col items-end gap-3">
-            <ThemeToggle />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setIsPresetsOpen(true)}
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-surface-alt hover:bg-surface-alt/80 transition-colors text-text-secondary hover:text-text-primary"
+                aria-label="プリセットを開く"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg>
+              </button>
+              <button
+                onClick={() => { setIsDetailedStats(true); setIsStatsOpen(true); }}
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-surface-alt hover:bg-surface-alt/80 transition-colors text-text-secondary hover:text-text-primary"
+                aria-label="統計を開く"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                  <line x1="2" y1="20" x2="22" y2="20" />
+                </svg>
+              </button>
+              <ThemeToggle />
+            </div>
             <CycleSettings
               totalCycles={timer.totalCycles}
               onTotalCyclesChange={timer.setTotalCycles}
@@ -143,6 +179,21 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="h-4" />
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="md:col-span-2">
+          <TodoList
+            todos={todos}
+            onAdd={addTodo}
+            onToggle={toggleTodo}
+            onDelete={deleteTodo}
+          />
+        </div>
+        <div>
+          <StatsSummary stats={stats} onOpenDetail={() => { setIsDetailedStats(false); setIsStatsOpen(true); }} />
+        </div>
+      </div>
+
       <div className="flex-1" />
       <Footer />
 
@@ -150,6 +201,55 @@ export default function Home() {
         isOpen={!!deck.playerError}
         message={deck.playerError || ""}
         onClose={deck.clearPlayerError}
+      />
+
+      <StatsPanel
+        isOpen={isStatsOpen}
+        onClose={() => setIsStatsOpen(false)}
+        stats={stats}
+        detailed={isDetailedStats}
+      />
+
+      <PresetsPanel
+        isOpen={isPresetsOpen}
+        onClose={() => setIsPresetsOpen(false)}
+        presets={presets}
+        currentSettings={{
+          workDurationMinutes: timer.workDurationMinutes,
+          shortBreakDurationMinutes: timer.shortBreakDurationMinutes,
+          longBreakDurationMinutes: timer.longBreakDurationMinutes,
+          totalCycles: timer.totalCycles,
+          longBreakEnabled: timer.longBreakEnabled,
+          workUrl: deck.workUrl,
+          shortBreakUrl: deck.shortBreakUrl,
+          longBreakUrl: deck.longBreakUrl,
+          workAudioSource: deck.workAudioSource,
+          shortBreakAudioSource: deck.shortBreakAudioSource,
+          longBreakAudioSource: deck.longBreakAudioSource,
+          workLibraryTrackId: deck.workLibraryTrackId,
+          shortBreakLibraryTrackId: deck.shortBreakLibraryTrackId,
+          longBreakLibraryTrackId: deck.longBreakLibraryTrackId,
+        }}
+        onSave={savePreset}
+        onApply={(preset) => {
+          timer.setWorkDuration(preset.workDurationMinutes);
+          timer.setShortBreakDuration(preset.shortBreakDurationMinutes);
+          timer.setLongBreakDuration(preset.longBreakDurationMinutes);
+          timer.setTotalCycles(preset.totalCycles);
+          timer.setLongBreakEnabled(preset.longBreakEnabled);
+          deck.setWorkUrl(preset.workUrl);
+          deck.setShortBreakUrl(preset.shortBreakUrl);
+          deck.setLongBreakUrl(preset.longBreakUrl);
+          deck.setWorkAudioSource(preset.workAudioSource);
+          deck.setShortBreakAudioSource(preset.shortBreakAudioSource);
+          deck.setLongBreakAudioSource(preset.longBreakAudioSource);
+          deck.setWorkLibraryTrackId(preset.workLibraryTrackId);
+          deck.setShortBreakLibraryTrackId(preset.shortBreakLibraryTrackId);
+          deck.setLongBreakLibraryTrackId(preset.longBreakLibraryTrackId);
+          setIsPresetsOpen(false);
+        }}
+        onDelete={deletePreset}
+        disabled={isRunning}
       />
     </main>
   );
