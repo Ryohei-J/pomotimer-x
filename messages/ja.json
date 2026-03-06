@@ -1,35 +1,35 @@
 {
   "Common": {
-    "work": "作業",
-    "shortBreak": "短い休憩",
-    "longBreak": "長い休憩"
+    "work": "Work",
+    "shortBreak": "Short Break",
+    "longBreak": "Long Break"
   },
   "AlarmToggle": {
-    "label": "アラーム",
-    "enable": "アラームを有効にする",
-    "disable": "アラームを無効にする"
+    "label": "Alarm",
+    "enable": "Enable alarm",
+    "disable": "Disable alarm"
   },
   "AudioSourceToggle": {
     "ariaLabel": "音源",
-    "library": "ライブラリ",
+    "library": "Library",
     "youtube": "YouTube"
   },
   "ControlBar": {
-    "start": "スタート",
-    "restart": "再スタート",
-    "pause": "一時停止",
-    "resume": "再開",
-    "reset": "リセット"
+    "start": "Start",
+    "restart": "Restart",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset"
   },
   "CycleSettings": {
-    "cycles": "サイクル",
-    "longBreak": "長い休憩",
-    "enableLongBreak": "長い休憩を有効にする",
-    "disableLongBreak": "長い休憩を無効にする"
+    "cycles": "Cycles",
+    "longBreak": "Long break",
+    "enableLongBreak": "Enable long break",
+    "disableLongBreak": "Disable long break"
   },
   "DeckPanel": {
-    "time": "時間（分）",
-    "durationAriaLabel": "{label}の時間（分）"
+    "time": "Time (min)",
+    "durationAriaLabel": "{label} duration in minutes"
   },
   "ErrorModal": {
     "title": "再生エラー",
@@ -58,7 +58,7 @@
     "stepAriaLabel": "ステップ {number}"
   },
   "LibrarySelect": {
-    "sound": "サウンド"
+    "sound": "Sound"
   },
   "PresetsPanel": {
     "title": "プリセット",
@@ -76,8 +76,8 @@
     "presetSummaryLb": " + 長休 {lb}分"
   },
   "SessionIndicator": {
-    "complete": "完了！",
-    "ready": "準備完了",
+    "complete": "Complete!",
+    "ready": "Ready",
     "sessionProgress": "{label} {current} / {total}"
   },
   "StatsSummary": {

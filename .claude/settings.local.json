@@ -12,7 +12,9 @@
       "Bash(git -C /Users/ryoheijin/Projects/pomotimer-x log --oneline --all)",
       "Bash(git -C /Users/ryoheijin/Projects/pomotimer-x diff:*)",
       "Bash(git checkout:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(ls:*)",
+      "Bash(kill %1:*)"
     ]
   }
 }

@@ -19,6 +19,7 @@
 - **統計ダッシュボード**: 今日の集中時間・セッション数・連続日数・過去7日間バーチャートをモーダルで表示
 - **プリセット保存**: タイマー時間・サイクル・音源設定を名前付きで保存し、ワンクリックで復元
 - **TODOリスト**: メインコンテンツ下部にタスク管理エリア。完了トグル・削除対応、localStorage 永続化
+- **多言語対応（i18n）**: URLベースのロケール（`/en/`・`/ja/`）。ヘッダーの EN/JA ボタンで切替。法的ページは英語のみ
 
 # 技術スタック
 
@@ -27,6 +28,7 @@
 - **スタイリング**: Tailwind CSS v4（CSS変数 + `@theme inline`）
 - **アニメーション**: Framer Motion（`motion/react`）
 - **フォント**: Inter（UI・タイマー含む全体）、`next/font/google` で読み込み
+- **i18n**: next-intl v4（URLベースロケール `/en/`・`/ja/`、`useTranslations` フック）
 - **API**: YouTube IFrame Player API + HTML5 Audio API（ライブラリ再生）
 - **永続化**: localStorage（`useLocalStorage` フック）
 - **デプロイ**: Vercel
@@ -34,15 +36,33 @@
 # プロジェクト構成
 
 ```
+messages/
+├── en.json             # 英語翻訳文字列（~150キー）
+└── ja.json             # 日本語翻訳文字列
+
 src/
 ├── app/
-│   ├── layout.tsx          # ルートレイアウト（フォント、テーマ初期化、OGPメタデータ）
-│   ├── page.tsx            # メインページ（3デッキ + タイマー + コントロール）
+│   ├── layout.tsx          # ルートレイアウト（最小パススルー）
+│   ├── page.tsx            # / → /en へリダイレクト
 │   ├── globals.css         # CSS変数テーマ、Tailwind設定
 │   ├── privacy/
-│   │   └── page.tsx        # プライバシーポリシーページ
-│   └── terms/
-│       └── page.tsx        # 利用規約ページ
+│   │   └── page.tsx        # /privacy → /en/privacy へリダイレクト
+│   ├── terms/
+│   │   └── page.tsx        # /terms → /en/terms へリダイレクト
+│   └── [locale]/
+│       ├── layout.tsx      # ロケールレイアウト（html lang, NextIntlClientProvider, OGP）
+│       ├── page.tsx        # メインページ（3デッキ + タイマー + コントロール）
+│       ├── privacy/
+│       │   └── page.tsx    # プライバシーポリシーページ（英語のみ）
+│       └── terms/
+│           └── page.tsx    # 利用規約ページ（英語のみ）
+├── i18n/
+│   ├── routing.ts      # locales: ['en', 'ja'], defaultLocale: 'en'
+│   ├── request.ts      # サーバーサイドメッセージ読み込み設定
+│   └── navigation.ts   # createNavigation（Link, useRouter, usePathname）
+├── proxy.tsx           # next-intl ロケールルーティング（Next.js 16 proxy convention）
+├── middleware.ts       # 空ファイル（proxy.ts と共存させるための workaround）
+├── proxy.ts            # 空ファイル（同上）
 ├── components/
 │   ├── AlarmToggle.tsx     # カウントダウンアラームの有効/無効トグル
 │   ├── AudioSourceToggle.tsx # Library / YouTube 音源切替タブ
@@ -52,6 +72,7 @@ src/
 │   ├── DeckPanel.tsx       # 各デッキのパネル（時間スライダー + 音源選択 + 再生UI）
 │   ├── ErrorModal.tsx      # エラーモーダル
 │   ├── Footer.tsx          # フッター（法的ページへのリンク）
+│   ├── LanguageSwitcher.tsx # EN/JA 切替ボタン
 │   ├── LibrarySelect.tsx   # 内蔵オーディオライブラリのトラック選択
 │   ├── PresetsPanel.tsx    # プリセット管理モーダル（保存・適用・削除）
 │   ├── SessionIndicator.tsx # 現在のセッション状態表示
@@ -96,6 +117,7 @@ public/
 - **自動再生制限**: ブラウザポリシーにより、最初のユーザー操作（Startボタン）時にプレーヤーを初期化する必要がある
 - **YouTube表示要件**: 利用規約に準拠するため、プレーヤーを小さくても画面上に表示し続ける（`w-40 h-24`）
 - **レスポンシブ**: デスクトップ使用を想定。`md`（768px）をブレークポイントとして1カラム↔3カラムを切り替え
+- **i18n proxy.tsx workaround**: Next.js 16 は `middleware.ts` と `proxy.ts` の共存を禁じる。両ファイルを削除できないため `pageExtensions: ['tsx', 'js', 'jsx', ...]`（`.ts` を除外）を設定し、実際のルーティングを `proxy.tsx` に記述することで回避している
 
 # localStorage キー一覧
 
