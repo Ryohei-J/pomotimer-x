@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { useTimer } from "@/hooks/useTimer";
 import { useYouTubeApi } from "@/hooks/useYouTubeApi";
@@ -22,11 +22,26 @@ import { StatsPanel } from "@/components/StatsPanel";
 import { StatsSummary } from "@/components/StatsSummary";
 import { PresetsPanel } from "@/components/PresetsPanel";
 import { TodoList } from "@/components/TodoList";
+import { HelpModal } from "@/components/HelpModal";
 
 export default function Home() {
   const [isStatsOpen, setIsStatsOpen] = useState(false);
   const [isDetailedStats, setIsDetailedStats] = useState(false);
   const [isPresetsOpen, setIsPresetsOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+
+  useEffect(() => {
+    try {
+      const seen = localStorage.getItem("pomotimerx:onboardingSeen");
+      if (!seen) {
+        setIsHelpOpen(true);
+        localStorage.setItem("pomotimerx:onboardingSeen", "true");
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
   const { stats, recordSession } = useStats();
   const { presets, savePreset, deletePreset } = usePresets();
   const { todos, addTodo, toggleTodo, deleteTodo } = useTodos();
@@ -109,6 +124,17 @@ export default function Home() {
                 </svg>
               </button>
               <ThemeToggle />
+              <button
+                onClick={() => setIsHelpOpen(true)}
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-surface-alt hover:bg-surface-alt/80 transition-colors text-text-secondary hover:text-text-primary"
+                aria-label="ヘルプを開く"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+              </button>
             </div>
             <CycleSettings
               totalCycles={timer.totalCycles}
@@ -251,6 +277,8 @@ export default function Home() {
         onDelete={deletePreset}
         disabled={isRunning}
       />
+
+      <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </main>
   );
 }
