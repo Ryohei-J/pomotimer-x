@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { SessionType, TimerStatus } from "@/types/timer";
 
 interface TimerDisplayProps {
@@ -8,12 +9,6 @@ interface TimerDisplayProps {
   status: TimerStatus;
   isComplete: boolean;
 }
-
-const SESSION_LABELS: Record<SessionType, string> = {
-  work: "Work",
-  shortBreak: "Short Break",
-  longBreak: "Long Break",
-};
 
 function formatTime(totalSeconds: number): string {
   const m = Math.floor(totalSeconds / 60);
@@ -27,14 +22,17 @@ export function TimerDisplay({
   status,
   isComplete,
 }: TimerDisplayProps) {
+  const t = useTranslations("TimerDisplay");
+  const tCommon = useTranslations("Common");
+
   const timeText = isComplete ? "00:00" : formatTime(remainingSeconds);
-  const sessionLabel = isComplete ? "Complete" : SESSION_LABELS[sessionType];
+  const sessionLabel = isComplete ? t("complete") : tCommon(sessionType);
 
   return (
     <div
       className="flex flex-col items-center gap-1"
       role="timer"
-      aria-label={`${sessionLabel} — ${timeText} remaining`}
+      aria-label={t("ariaLabel", { session: sessionLabel, time: timeText })}
       aria-live="polite"
       aria-atomic="true"
     >

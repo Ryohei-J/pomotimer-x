@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // Exclude .ts from pageExtensions so that proxy.ts and middleware.ts are not
+  // detected as proxy/middleware files. The actual proxy is in proxy.tsx.
+  pageExtensions: ["tsx", "js", "jsx", "mjs", "cjs"],
   async headers() {
     return [
       {
@@ -32,4 +38,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

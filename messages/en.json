@@ -1,0 +1,143 @@
+{
+  "Common": {
+    "work": "Work",
+    "shortBreak": "Short Break",
+    "longBreak": "Long Break"
+  },
+  "AlarmToggle": {
+    "label": "Alarm",
+    "enable": "Enable alarm",
+    "disable": "Disable alarm"
+  },
+  "AudioSourceToggle": {
+    "ariaLabel": "Audio source",
+    "library": "Library",
+    "youtube": "YouTube"
+  },
+  "ControlBar": {
+    "start": "Start",
+    "restart": "Restart",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset"
+  },
+  "CycleSettings": {
+    "cycles": "Cycles",
+    "longBreak": "Long break",
+    "enableLongBreak": "Enable long break",
+    "disableLongBreak": "Disable long break"
+  },
+  "DeckPanel": {
+    "time": "Time (min)",
+    "durationAriaLabel": "{label} duration in minutes"
+  },
+  "ErrorModal": {
+    "title": "Playback Error",
+    "ok": "OK"
+  },
+  "Footer": {
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "youtubeTerms": "YouTube Terms",
+    "googlePrivacy": "Google Privacy Policy",
+    "copyright": "© 2026 PomotimerX. All rights reserved."
+  },
+  "HelpModal": {
+    "step1Title": "Welcome to PomotimerX",
+    "step1Body": "A Pomodoro timer combined with music playback. BGM automatically switches to match your focus and break rhythm.",
+    "step2Title": "3 Decks",
+    "step2Body": "There are 3 decks: Work, Short Break, and Long Break. Set the timer duration and audio source for each — they switch automatically once you start.",
+    "step3Title": "Set Your Audio",
+    "step3Body": "Choose \"Library\" or \"YouTube\" for each deck. Library plays built-in ambient sounds (Rain, Cafe, etc.). YouTube just needs a URL.",
+    "step4Title": "Let's Get Started",
+    "step4Body": "Save your settings as presets for quick access. Track your focus time in Stats, and manage tasks with the TODO list.",
+    "back": "Back",
+    "skip": "Skip",
+    "getStarted": "Get Started",
+    "next": "Next",
+    "stepAriaLabel": "Step {number}"
+  },
+  "LibrarySelect": {
+    "sound": "Sound"
+  },
+  "PresetsPanel": {
+    "title": "Presets",
+    "close": "Close",
+    "saveCurrentSettings": "Save current settings",
+    "namePlaceholder": "Enter preset name...",
+    "save": "Save",
+    "noPresets": "No saved presets",
+    "apply": "Apply",
+    "applyDisabledTitle": "Stop the timer to apply",
+    "deleteConfirmTitle": "Press again to delete",
+    "deleteTitle": "Delete",
+    "deleteAriaLabel": "Delete",
+    "presetSummary": "Work {work}m / Break {break}m × {cycles}",
+    "presetSummaryLb": " + {lb}m LB"
+  },
+  "SessionIndicator": {
+    "complete": "Complete!",
+    "ready": "Ready",
+    "sessionProgress": "{label} {current} / {total}"
+  },
+  "StatsSummary": {
+    "title": "Stats",
+    "detail": "Detail",
+    "todayFocus": "Today's focus",
+    "completedSessions": "Sessions",
+    "streak": "Streak",
+    "last7days": "Last 7 days",
+    "sessionsCount": "{count} sessions",
+    "streakDays": "{days} days"
+  },
+  "StatsPanel": {
+    "title": "Stats",
+    "close": "Close",
+    "todayFocus": "Today's focus",
+    "completedSessions": "Sessions",
+    "streak": "Streak",
+    "last7days": "Focus time — last 7 days",
+    "weeklyComparison": "Weekly comparison",
+    "thisWeek": "This week (7 days)",
+    "lastWeek": "Last week (7 days)",
+    "focusedMore": "Focused {minutes} more than last week",
+    "focusedLess": "{minutes} less than last week",
+    "totalFocus": "Total focus time",
+    "totalSessions": "Total sessions",
+    "sessionsCount": "{count} sessions",
+    "streakDays": "{days} days"
+  },
+  "TimerDisplay": {
+    "complete": "Complete",
+    "ariaLabel": "{session} — {time} remaining"
+  },
+  "TodoList": {
+    "title": "TODO",
+    "placeholder": "Add a task...",
+    "addAriaLabel": "Add",
+    "emptyState": "Add a task to kick off your session",
+    "markDone": "Mark as done",
+    "markUndone": "Mark as not done",
+    "deleteAriaLabel": "Delete"
+  },
+  "ThemeToggle": {
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode"
+  },
+  "LanguageSwitcher": {
+    "en": "EN",
+    "ja": "日本語"
+  },
+  "Layout": {
+    "title": "PomotimerX",
+    "description": "Pomodoro timer with YouTube music playback. Assign tracks to Work, Short Break, and Long Break sessions."
+  },
+  "UrlInput": {
+    "label": "YouTube URL"
+  },
+  "Page": {
+    "presetsAriaLabel": "Open presets",
+    "statsAriaLabel": "Open stats",
+    "helpAriaLabel": "Open help"
+  }
+}

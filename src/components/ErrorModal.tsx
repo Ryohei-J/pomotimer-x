@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/Button";
 
 interface ErrorModalProps {
@@ -11,6 +12,8 @@ interface ErrorModalProps {
 }
 
 export function ErrorModal({ isOpen, message, onClose }: ErrorModalProps) {
+  const t = useTranslations("ErrorModal");
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -49,11 +52,11 @@ export function ErrorModal({ isOpen, message, onClose }: ErrorModalProps) {
               id="error-modal-title"
               className="text-lg font-semibold mb-3"
             >
-              Playback Error
+              {t("title")}
             </h3>
             <p className="text-text-secondary mb-6">{message}</p>
             <Button onClick={onClose} className="w-full">
-              OK
+              {t("ok")}
             </Button>
           </motion.div>
         </motion.div>

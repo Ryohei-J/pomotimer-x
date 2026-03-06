@@ -1,0 +1,143 @@
+{
+  "Common": {
+    "work": "作業",
+    "shortBreak": "短い休憩",
+    "longBreak": "長い休憩"
+  },
+  "AlarmToggle": {
+    "label": "アラーム",
+    "enable": "アラームを有効にする",
+    "disable": "アラームを無効にする"
+  },
+  "AudioSourceToggle": {
+    "ariaLabel": "音源",
+    "library": "ライブラリ",
+    "youtube": "YouTube"
+  },
+  "ControlBar": {
+    "start": "スタート",
+    "restart": "再スタート",
+    "pause": "一時停止",
+    "resume": "再開",
+    "reset": "リセット"
+  },
+  "CycleSettings": {
+    "cycles": "サイクル",
+    "longBreak": "長い休憩",
+    "enableLongBreak": "長い休憩を有効にする",
+    "disableLongBreak": "長い休憩を無効にする"
+  },
+  "DeckPanel": {
+    "time": "時間（分）",
+    "durationAriaLabel": "{label}の時間（分）"
+  },
+  "ErrorModal": {
+    "title": "再生エラー",
+    "ok": "OK"
+  },
+  "Footer": {
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約",
+    "youtubeTerms": "YouTube 利用規約",
+    "googlePrivacy": "Google プライバシーポリシー",
+    "copyright": "© 2026 PomotimerX. All rights reserved."
+  },
+  "HelpModal": {
+    "step1Title": "PomotimerXへようこそ",
+    "step1Body": "ポモドーロタイマーと音楽を組み合わせたアプリです。集中と休憩のリズムに合わせて、BGMが自動で切り替わります。",
+    "step2Title": "3つのデッキ",
+    "step2Body": "Work・Short Break・Long Break の3つのデッキがあります。それぞれにタイマーの長さと音源を設定して、スタートすれば自動で切り替わります。",
+    "step3Title": "音源を設定する",
+    "step3Body": "各デッキで「ライブラリ」か「YouTube」を選べます。ライブラリは内蔵の環境音（Rain, Cafe など）、YouTube は URL を貼るだけで再生できます。",
+    "step4Title": "さあ、始めよう",
+    "step4Body": "設定はプリセットに保存して素早く呼び出せます。集中時間は統計で確認でき、TODOリストでタスク管理もできます。",
+    "back": "戻る",
+    "skip": "スキップ",
+    "getStarted": "始めよう",
+    "next": "次へ",
+    "stepAriaLabel": "ステップ {number}"
+  },
+  "LibrarySelect": {
+    "sound": "サウンド"
+  },
+  "PresetsPanel": {
+    "title": "プリセット",
+    "close": "閉じる",
+    "saveCurrentSettings": "現在の設定を保存",
+    "namePlaceholder": "プリセット名を入力...",
+    "save": "保存",
+    "noPresets": "保存済みプリセットがありません",
+    "apply": "適用",
+    "applyDisabledTitle": "タイマー停止後に適用できます",
+    "deleteConfirmTitle": "もう一度押すと削除",
+    "deleteTitle": "削除",
+    "deleteAriaLabel": "削除",
+    "presetSummary": "作業 {work}分 / 休憩 {break}分 × {cycles}",
+    "presetSummaryLb": " + 長休 {lb}分"
+  },
+  "SessionIndicator": {
+    "complete": "完了！",
+    "ready": "準備完了",
+    "sessionProgress": "{label} {current} / {total}"
+  },
+  "StatsSummary": {
+    "title": "統計",
+    "detail": "詳細",
+    "todayFocus": "今日の集中",
+    "completedSessions": "完了セッション",
+    "streak": "連続日数",
+    "last7days": "過去7日間",
+    "sessionsCount": "{count}回",
+    "streakDays": "{days}日"
+  },
+  "StatsPanel": {
+    "title": "統計",
+    "close": "閉じる",
+    "todayFocus": "今日の集中",
+    "completedSessions": "完了セッション",
+    "streak": "連続日数",
+    "last7days": "過去7日間の集中時間",
+    "weeklyComparison": "週次比較",
+    "thisWeek": "今週（7日間）",
+    "lastWeek": "先週（7日間）",
+    "focusedMore": "先週より {minutes} 多く集中しました",
+    "focusedLess": "先週より {minutes} 少なめです",
+    "totalFocus": "累計集中時間",
+    "totalSessions": "累計セッション数",
+    "sessionsCount": "{count}回",
+    "streakDays": "{days}日"
+  },
+  "TimerDisplay": {
+    "complete": "完了",
+    "ariaLabel": "{session} — 残り {time}"
+  },
+  "TodoList": {
+    "title": "TODO",
+    "placeholder": "タスクを追加...",
+    "addAriaLabel": "追加",
+    "emptyState": "タスクを追加してセッションを始めましょう",
+    "markDone": "完了にする",
+    "markUndone": "未完了に戻す",
+    "deleteAriaLabel": "削除"
+  },
+  "ThemeToggle": {
+    "switchToLight": "ライトモードに切り替え",
+    "switchToDark": "ダークモードに切り替え"
+  },
+  "LanguageSwitcher": {
+    "en": "EN",
+    "ja": "日本語"
+  },
+  "Layout": {
+    "title": "PomotimerX",
+    "description": "ポモドーロタイマーと音楽再生を組み合わせたアプリ。Work・Short Break・Long Break に音楽を割り当てて集中力を高めよう。"
+  },
+  "UrlInput": {
+    "label": "YouTube URL"
+  },
+  "Page": {
+    "presetsAriaLabel": "プリセットを開く",
+    "statsAriaLabel": "統計を開く",
+    "helpAriaLabel": "ヘルプを開く"
+  }
+}

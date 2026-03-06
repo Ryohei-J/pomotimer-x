@@ -1,6 +1,7 @@
 "use client";
 
 import { useId } from "react";
+import { useTranslations } from "next-intl";
 
 interface UrlInputProps {
   url: string;
@@ -15,12 +16,13 @@ export function UrlInput({
   disabled,
   error,
 }: UrlInputProps) {
+  const t = useTranslations("UrlInput");
   const errorId = useId();
 
   return (
     <div>
       <label className="block text-sm text-text-secondary mb-2">
-        YouTube URL
+        {t("label")}
       </label>
       <input
         type="url"

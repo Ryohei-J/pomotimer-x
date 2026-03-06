@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { LIBRARY_TRACKS } from "@/lib/libraryTracks";
 
 interface LibrarySelectProps {
@@ -9,9 +10,10 @@ interface LibrarySelectProps {
 }
 
 export function LibrarySelect({ trackId, onTrackChange, disabled }: LibrarySelectProps) {
+  const t = useTranslations("LibrarySelect");
   return (
     <div>
-      <label className="block text-sm text-text-secondary mb-2">Sound</label>
+      <label className="block text-sm text-text-secondary mb-2">{t("sound")}</label>
       <select
         value={trackId}
         onChange={(e) => onTrackChange(e.target.value)}

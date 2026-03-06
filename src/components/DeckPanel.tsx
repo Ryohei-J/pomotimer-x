@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { SessionType, AudioSource } from "@/types/timer";
 import { AudioSourceToggle } from "./AudioSourceToggle";
 import { LibrarySelect } from "./LibrarySelect";
@@ -22,12 +23,6 @@ interface DeckPanelProps {
   onLibraryTrackChange: (id: string) => void;
 }
 
-const LABELS: Record<SessionType, string> = {
-  work: "Work",
-  shortBreak: "Short Break",
-  longBreak: "Long Break",
-};
-
 const MAX_MINUTES: Record<SessionType, number> = {
   work: 90,
   shortBreak: 30,
@@ -49,6 +44,10 @@ export function DeckPanel({
   libraryTrackId,
   onLibraryTrackChange,
 }: DeckPanelProps) {
+  const tCommon = useTranslations("Common");
+  const t = useTranslations("DeckPanel");
+  const label = tCommon(type);
+
   return (
     <div className="p-5 flex flex-col gap-4">
       <h2 className="text-lg font-bold flex items-center gap-2">
@@ -56,11 +55,11 @@ export function DeckPanel({
           className="w-2.5 h-2.5 rounded-full inline-block"
           style={{ backgroundColor: isActive ? "var(--c-accent)" : "var(--c-text-secondary)" }}
         />
-        {LABELS[type]}
+        {label}
       </h2>
 
       <div>
-        <label className="block text-sm text-text-secondary mb-1">Time (min)</label>
+        <label className="block text-sm text-text-secondary mb-1">{t("time")}</label>
         <div className="flex items-center gap-3">
           <input
             type="range"
@@ -70,7 +69,7 @@ export function DeckPanel({
             onChange={(e) => onDurationChange(Number(e.target.value))}
             disabled={disabled}
             className="flex-1"
-            aria-label={`${LABELS[type]} duration in minutes`}
+            aria-label={t("durationAriaLabel", { label })}
           />
           <input
             type="number"

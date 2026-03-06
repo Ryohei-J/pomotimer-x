@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/Button";
 import type { TimerStatus } from "@/types/timer";
 
@@ -20,21 +21,22 @@ export function ControlBar({
   onResume,
   onReset,
 }: ControlBarProps) {
+  const t = useTranslations("ControlBar");
   return (
     <div className="flex gap-4">
       {status === "idle" && (
         <Button onClick={onStart} className="w-[110px]">
-          {isComplete ? "Restart" : "Start"}
+          {isComplete ? t("restart") : t("start")}
         </Button>
       )}
       {status === "running" && (
         <Button onClick={onPause} className="w-[110px]">
-          Pause
+          {t("pause")}
         </Button>
       )}
       {status === "paused" && (
         <Button onClick={onResume} className="w-[110px]">
-          Resume
+          {t("resume")}
         </Button>
       )}
       <Button
@@ -43,7 +45,7 @@ export function ControlBar({
         disabled={status === "idle" && !isComplete}
         className="w-[110px]"
       >
-        Reset
+        {t("reset")}
       </Button>
     </div>
   );

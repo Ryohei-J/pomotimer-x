@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Preset, PresetSettings } from "@/types/preset";
 
 interface Props {
@@ -14,14 +15,6 @@ interface Props {
   disabled: boolean;
 }
 
-function presetSummary(p: Preset | PresetSettings): string {
-  const lb =
-    "longBreakEnabled" in p && p.longBreakEnabled
-      ? ` + ${p.longBreakDurationMinutes}m LB`
-      : "";
-  return `Work ${p.workDurationMinutes}m / Break ${p.shortBreakDurationMinutes}m × ${"totalCycles" in p ? p.totalCycles : "?"}${lb}`;
-}
-
 export function PresetsPanel({
   isOpen,
   onClose,
@@ -32,10 +25,25 @@ export function PresetsPanel({
   onDelete,
   disabled,
 }: Props) {
+  const t = useTranslations("PresetsPanel");
   const [name, setName] = useState("");
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   if (!isOpen) return null;
+
+  const presetSummary = (p: Preset | PresetSettings): string => {
+    const lb =
+      "longBreakEnabled" in p && p.longBreakEnabled
+        ? t("presetSummaryLb", { lb: p.longBreakDurationMinutes })
+        : "";
+    return (
+      t("presetSummary", {
+        work: p.workDurationMinutes,
+        break: p.shortBreakDurationMinutes,
+        cycles: "totalCycles" in p ? p.totalCycles : "?",
+      }) + lb
+    );
+  };
 
   const handleSave = () => {
     const trimmed = name.trim();
@@ -66,11 +74,11 @@ export function PresetsPanel({
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 pb-4">
-          <h2 className="text-xl font-bold text-text-primary">プリセット</h2>
+          <h2 className="text-xl font-bold text-text-primary">{t("title")}</h2>
           <button
             onClick={onClose}
             className="text-text-secondary hover:text-text-primary transition-colors p-1"
-            aria-label="閉じる"
+            aria-label={t("close")}
           >
             <svg
               width="20"
@@ -88,7 +96,7 @@ export function PresetsPanel({
 
         {/* Save current settings */}
         <div className="px-6 pb-4">
-          <p className="text-xs text-text-secondary mb-2">現在の設定を保存</p>
+          <p className="text-xs text-text-secondary mb-2">{t("saveCurrentSettings")}</p>
           <p className="text-xs text-text-secondary mb-3 opacity-70">
             {presetSummary(currentSettings)}
           </p>
@@ -98,7 +106,7 @@ export function PresetsPanel({
               value={name}
               onChange={(e) => setName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSave()}
-              placeholder="プリセット名を入力..."
+              placeholder={t("namePlaceholder")}
               maxLength={40}
               className="flex-1 bg-surface-alt rounded-lg px-3 py-2 text-sm text-text-primary placeholder:text-text-secondary outline-none focus:ring-1"
               style={{ "--tw-ring-color": "var(--c-accent)" } as React.CSSProperties}
@@ -112,7 +120,7 @@ export function PresetsPanel({
                 color: "#fff",
               }}
             >
-              保存
+              {t("save")}
             </button>
           </div>
         </div>
@@ -123,7 +131,7 @@ export function PresetsPanel({
         <div className="overflow-y-auto flex-1 px-6 py-4">
           {presets.length === 0 ? (
             <p className="text-sm text-text-secondary text-center py-6">
-              保存済みプリセットがありません
+              {t("noPresets")}
             </p>
           ) : (
             <ul className="flex flex-col gap-2">
@@ -148,9 +156,9 @@ export function PresetsPanel({
                       backgroundColor: "var(--c-accent)",
                       color: "#fff",
                     }}
-                    title={disabled ? "タイマー停止後に適用できます" : undefined}
+                    title={disabled ? t("applyDisabledTitle") : undefined}
                   >
-                    適用
+                    {t("apply")}
                   </button>
                   <button
                     onClick={() => handleDelete(preset.id)}
@@ -162,10 +170,10 @@ export function PresetsPanel({
                     }
                     title={
                       confirmDeleteId === preset.id
-                        ? "もう一度押すと削除"
-                        : "削除"
+                        ? t("deleteConfirmTitle")
+                        : t("deleteTitle")
                     }
-                    aria-label="削除"
+                    aria-label={t("deleteAriaLabel")}
                   >
                     <svg
                       width="16"

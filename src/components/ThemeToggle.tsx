@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 type Theme = "light" | "dark";
@@ -30,6 +31,7 @@ function MoonIcon() {
 }
 
 export function ThemeToggle() {
+  const t = useTranslations("ThemeToggle");
   const [theme, setTheme] = useLocalStorage<Theme>("pomotimerx:theme", "dark");
   const [mounted, setMounted] = useState(false);
 
@@ -57,7 +59,7 @@ export function ThemeToggle() {
       className="w-9 h-9 rounded-full flex items-center justify-center
         bg-surface-alt hover:bg-surface-alt/80 transition-colors
         text-text-secondary hover:text-text-primary"
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={theme === "dark" ? t("switchToLight") : t("switchToDark")}
     >
       {theme === "dark" ? <SunIcon /> : <MoonIcon />}
     </button>

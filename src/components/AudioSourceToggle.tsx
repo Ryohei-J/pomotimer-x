@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { AudioSource } from "@/types/timer";
 
 interface AudioSourceToggleProps {
@@ -9,11 +10,12 @@ interface AudioSourceToggleProps {
 }
 
 export function AudioSourceToggle({ value, onChange, disabled }: AudioSourceToggleProps) {
+  const t = useTranslations("AudioSourceToggle");
   return (
     <div
       className="flex rounded-lg overflow-hidden border border-divider text-sm"
       role="group"
-      aria-label="Audio source"
+      aria-label={t("ariaLabel")}
     >
       {(["library", "youtube"] as const).map((source) => {
         const isActive = value === source;
@@ -30,7 +32,7 @@ export function AudioSourceToggle({ value, onChange, disabled }: AudioSourceTogg
                 : "bg-surface-alt text-text-secondary hover:text-text-primary"
               }`}
           >
-            {source === "library" ? "Library" : "YouTube"}
+            {source === "library" ? t("library") : t("youtube")}
           </button>
         );
       })}

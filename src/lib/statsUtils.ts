@@ -5,10 +5,10 @@ export function formatMinutes(minutes: number): string {
   return m > 0 ? `${h}h ${m}m` : `${h}h`;
 }
 
-export function getDayLabel(dateStr: string): string {
+export function getDayLabel(dateStr: string, locale = "en"): string {
   const [year, month, day] = dateStr.split("-").map(Number);
   const d = new Date(year, month - 1, day);
-  return d.toLocaleDateString("ja-JP", { weekday: "short" });
+  return d.toLocaleDateString(locale === "ja" ? "ja-JP" : "en-US", { weekday: "short" });
 }
 
 export function getLocalDateStr(): string {

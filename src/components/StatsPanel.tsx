@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import type { StatsData } from "@/types/stats";
 import { formatMinutes, getDayLabel, getLocalDateStr } from "@/lib/statsUtils";
 
@@ -11,6 +12,9 @@ interface Props {
 }
 
 export function StatsPanel({ isOpen, onClose, stats, detailed }: Props) {
+  const t = useTranslations("StatsPanel");
+  const locale = useLocale();
+
   if (!isOpen) return null;
 
   const today = getLocalDateStr();
@@ -29,11 +33,11 @@ export function StatsPanel({ isOpen, onClose, stats, detailed }: Props) {
       >
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-text-primary">統計</h2>
+          <h2 className="text-xl font-bold text-text-primary">{t("title")}</h2>
           <button
             onClick={onClose}
             className="text-text-secondary hover:text-text-primary transition-colors p-1"
-            aria-label="閉じる"
+            aria-label={t("close")}
           >
             <svg
               width="20"
@@ -51,14 +55,14 @@ export function StatsPanel({ isOpen, onClose, stats, detailed }: Props) {
 
         {/* Today's stats */}
         <div className="grid grid-cols-3 gap-3">
-          <StatCard label="今日の集中" value={formatMinutes(stats.todayMinutes)} />
-          <StatCard label="完了セッション" value={`${stats.todaySessions}回`} />
-          <StatCard label="連続日数" value={`${stats.streak}日`} accent />
+          <StatCard label={t("todayFocus")} value={formatMinutes(stats.todayMinutes)} />
+          <StatCard label={t("completedSessions")} value={t("sessionsCount", { count: stats.todaySessions })} />
+          <StatCard label={t("streak")} value={t("streakDays", { days: stats.streak })} accent />
         </div>
 
         {/* 7-day bar chart */}
         <div>
-          <p className="text-sm text-text-secondary mb-3">過去7日間の集中時間</p>
+          <p className="text-sm text-text-secondary mb-3">{t("last7days")}</p>
           <div className="flex items-end gap-1.5" style={{ height: "96px" }}>
             {stats.weeklyData.map(({ date, minutes }) => {
               const isToday = date === today;
@@ -90,7 +94,7 @@ export function StatsPanel({ isOpen, onClose, stats, detailed }: Props) {
                       fontWeight: isToday ? 600 : 400,
                     }}
                   >
-                    {getDayLabel(date)}
+                    {getDayLabel(date, locale)}
                   </span>
                 </div>
               );
@@ -101,13 +105,13 @@ export function StatsPanel({ isOpen, onClose, stats, detailed }: Props) {
         {/* Weekly comparison (detailed only) */}
         {detailed && (
           <div className="border-t border-divider pt-4 flex flex-col gap-2">
-            <p className="text-sm text-text-secondary">週次比較</p>
+            <p className="text-sm text-text-secondary">{t("weeklyComparison")}</p>
             <div className="flex justify-between text-sm">
-              <span className="text-text-secondary">今週（7日間）</span>
+              <span className="text-text-secondary">{t("thisWeek")}</span>
               <span className="text-text-primary font-medium">{formatMinutes(stats.thisWeekMinutes)}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-text-secondary">先週（7日間）</span>
+              <span className="text-text-secondary">{t("lastWeek")}</span>
               <span className="text-text-primary font-medium">{formatMinutes(stats.lastWeekMinutes)}</span>
             </div>
             <p
@@ -115,8 +119,8 @@ export function StatsPanel({ isOpen, onClose, stats, detailed }: Props) {
               style={{ color: weeklyDiff >= 0 ? "var(--c-work)" : "var(--c-text-secondary)" }}
             >
               {weeklyDiff >= 0
-                ? `先週より ${formatMinutes(weeklyDiff)} 多く集中しました`
-                : `先週より ${formatMinutes(-weeklyDiff)} 少なめです`}
+                ? t("focusedMore", { minutes: formatMinutes(weeklyDiff) })
+                : t("focusedLess", { minutes: formatMinutes(-weeklyDiff) })}
             </p>
           </div>
         )}
@@ -124,15 +128,15 @@ export function StatsPanel({ isOpen, onClose, stats, detailed }: Props) {
         {/* Totals */}
         <div className="border-t border-divider pt-4 flex flex-col gap-2">
           <div className="flex justify-between text-sm">
-            <span className="text-text-secondary">累計集中時間</span>
+            <span className="text-text-secondary">{t("totalFocus")}</span>
             <span className="text-text-primary font-medium">
               {formatMinutes(stats.totalMinutes)}
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-text-secondary">累計セッション数</span>
+            <span className="text-text-secondary">{t("totalSessions")}</span>
             <span className="text-text-primary font-medium">
-              {stats.totalSessions}回
+              {t("sessionsCount", { count: stats.totalSessions })}
             </span>
           </div>
         </div>

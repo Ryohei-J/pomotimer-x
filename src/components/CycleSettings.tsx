@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 interface CycleSettingsProps {
   totalCycles: number;
   onTotalCyclesChange: (cycles: number) => void;
@@ -15,10 +17,11 @@ export function CycleSettings({
   onLongBreakEnabledChange,
   disabled,
 }: CycleSettingsProps) {
+  const t = useTranslations("CycleSettings");
   return (
     <div className="flex flex-wrap items-center justify-end gap-4 text-sm text-text-secondary">
       <div className="flex items-center gap-2">
-        <label>Cycles</label>
+        <label>{t("cycles")}</label>
         <input
           type="number"
           min={1}
@@ -32,7 +35,7 @@ export function CycleSettings({
         />
       </div>
       <div className="flex items-center gap-2">
-        <span>Long break</span>
+        <span>{t("longBreak")}</span>
         <button
           role="switch"
           aria-checked={longBreakEnabled}
@@ -42,7 +45,7 @@ export function CycleSettings({
             transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1
             disabled:opacity-50 disabled:cursor-not-allowed
             ${longBreakEnabled ? "bg-accent" : "bg-surface-alt border border-divider"}`}
-          aria-label={longBreakEnabled ? "Disable long break" : "Enable long break"}
+          aria-label={longBreakEnabled ? t("disableLongBreak") : t("enableLongBreak")}
         >
           <span
             className={`inline-block h-3.5 w-3.5 rounded-full bg-white shadow

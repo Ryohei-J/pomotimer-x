@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import type { SessionType, TimerStatus } from "@/types/timer";
 
 interface SessionIndicatorProps {
@@ -11,12 +12,6 @@ interface SessionIndicatorProps {
   isComplete: boolean;
 }
 
-const SESSION_LABELS: Record<SessionType, string> = {
-  work: "Work",
-  shortBreak: "Short Break",
-  longBreak: "Long Break",
-};
-
 export function SessionIndicator({
   sessionType,
   currentCycle,
@@ -24,13 +19,20 @@ export function SessionIndicator({
   status,
   isComplete,
 }: SessionIndicatorProps) {
+  const t = useTranslations("SessionIndicator");
+  const tCommon = useTranslations("Common");
+
   let text: string;
   if (isComplete) {
-    text = "Complete!";
+    text = t("complete");
   } else if (status === "idle") {
-    text = "Ready";
+    text = t("ready");
   } else {
-    text = `${SESSION_LABELS[sessionType]} ${currentCycle} / ${totalCycles}`;
+    text = t("sessionProgress", {
+      label: tCommon(sessionType),
+      current: currentCycle,
+      total: totalCycles,
+    });
   }
 
   return (
