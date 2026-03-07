@@ -10,7 +10,7 @@
     "disable": "Disable alarm"
   },
   "AudioSourceToggle": {
-    "ariaLabel": "音源",
+    "ariaLabel": "Audio source",
     "library": "Library",
     "youtube": "YouTube"
   },
@@ -108,7 +108,7 @@
     "streakDays": "{days}日"
   },
   "TimerDisplay": {
-    "complete": "完了",
+    "complete": "Complete",
     "ariaLabel": "{session} — 残り {time}"
   },
   "TodoList": {

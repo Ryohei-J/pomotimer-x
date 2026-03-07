@@ -105,7 +105,7 @@ export function PresetsPanel({
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSave()}
+              onKeyDown={(e) => e.key === "Enter" && !e.nativeEvent.isComposing && handleSave()}
               placeholder={t("namePlaceholder")}
               maxLength={40}
               className="flex-1 bg-surface-alt rounded-lg px-3 py-2 text-sm text-text-primary placeholder:text-text-secondary outline-none focus:ring-1"

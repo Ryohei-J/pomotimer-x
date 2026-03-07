@@ -28,6 +28,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export default function Home() {
   const t = useTranslations("Page");
+  const tCommon = useTranslations("Common");
   const [isStatsOpen, setIsStatsOpen] = useState(false);
   const [isDetailedStats, setIsDetailedStats] = useState(false);
   const [isPresetsOpen, setIsPresetsOpen] = useState(false);
@@ -60,6 +61,18 @@ export default function Home() {
   const alarm = useAlarm(timer.remainingSeconds, timer.status, timer.sessionType);
 
   const isRunning = timer.status !== "idle";
+
+  useEffect(() => {
+    if (timer.status === "idle" && !timer.isComplete) {
+      document.title = "PomotimerX";
+      return;
+    }
+    const mm = String(Math.floor(timer.remainingSeconds / 60)).padStart(2, "0");
+    const ss = String(timer.remainingSeconds % 60).padStart(2, "0");
+    const sessionLabel = tCommon(timer.sessionType);
+    const prefix = timer.status === "paused" ? "⏸ " : "";
+    document.title = `${prefix}${mm}:${ss} – ${sessionLabel} | PomotimerX`;
+  }, [timer.remainingSeconds, timer.status, timer.sessionType, timer.isComplete, tCommon]);
 
   const handleStart = useCallback(() => {
     deck.initializePlayers();
@@ -219,7 +232,7 @@ export default function Home() {
             onDelete={deleteTodo}
           />
         </div>
-        <div>
+        <div className="self-start">
           <StatsSummary stats={stats} onOpenDetail={() => { setIsDetailedStats(false); setIsStatsOpen(true); }} />
         </div>
       </div>
