@@ -32,14 +32,14 @@ export async function generateMetadata({
       description: t("description"),
       url: "https://pomotimerx.vercel.app",
       siteName: "PomotimerX",
-      images: [{ url: "/logo.png", width: 512, height: 512, alt: "PomotimerX logo" }],
+      images: [{ url: "/logo.svg", width: 512, height: 512, alt: "PomotimerX logo" }],
       type: "website",
     },
     twitter: {
       card: "summary",
       title: t("title"),
       description: t("description"),
-      images: ["/logo.png"],
+      images: ["/logo.svg"],
     },
   };
 }

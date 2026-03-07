@@ -86,7 +86,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 p-6 pb-4 items-start">
           {/* Left: Logo */}
           <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="PomotimerX logo" width={36} height={36} />
+            <Image src="/logo.svg" alt="PomotimerX logo" width={36} height={36} unoptimized />
             <h1 className="text-2xl md:text-3xl font-bold">PomotimerX</h1>
           </div>
 
